@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Gameloop.Vdf</name>
+    </assembly>
+    <members>
+        <member name="M:Gameloop.Vdf.Utilities.CollectionUtils.AddRange``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Adds the elements of the specified collection to the specified generic <see cref="T:System.Collections.Generic.IList`1"/>.
+            </summary>
+            <param name="initial">The list to add to.</param>
+            <param name="collection">The collection of elements to add.</param>
+        </member>
+        <member name="M:Gameloop.Vdf.Utilities.DynamicProxyMetaObject`1.CallMethodWithResult(System.String,System.Dynamic.DynamicMetaObjectBinder,System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression},Gameloop.Vdf.Utilities.DynamicProxyMetaObject{`0}.Fallback,Gameloop.Vdf.Utilities.DynamicProxyMetaObject{`0}.Fallback)">
+            <summary>
+            Helper method for generating a MetaObject which calls a
+            specific method on Dynamic that returns a result
+            </summary>
+        </member>
+        <member name="M:Gameloop.Vdf.Utilities.DynamicProxyMetaObject`1.CallMethodReturnLast(System.String,System.Dynamic.DynamicMetaObjectBinder,System.Collections.Generic.IEnumerable{System.Linq.Expressions.Expression},Gameloop.Vdf.Utilities.DynamicProxyMetaObject{`0}.Fallback)">
+            <summary>
+            Helper method for generating a MetaObject which calls a
+            specific method on Dynamic, but uses one of the arguments for
+            the result.
+            </summary>
+        </member>
+        <member name="M:Gameloop.Vdf.Utilities.DynamicProxyMetaObject`1.CallMethodNoResult(System.String,System.Dynamic.DynamicMetaObjectBinder,System.Linq.Expressions.Expression[],Gameloop.Vdf.Utilities.DynamicProxyMetaObject{`0}.Fallback)">
+            <summary>
+            Helper method for generating a MetaObject which calls a
+            specific method on Dynamic, but uses one of the arguments for
+            the result.
+            </summary>
+        </member>
+        <member name="M:Gameloop.Vdf.Utilities.DynamicProxyMetaObject`1.GetRestrictions">
+            <summary>
+            Returns a Restrictions object which includes our current restrictions merged
+            with a restriction limiting our type
+            </summary>
+        </member>
+        <member name="F:Gameloop.Vdf.VdfSerializerSettings.UsesEscapeSequences">
+            <summary>
+            Determines whether the parser should translate escape sequences (/n, /t, etc.).
+            </summary>
+        </member>
+        <member name="F:Gameloop.Vdf.VdfSerializerSettings.UsesConditionals">
+            <summary>
+            Determines whether the parser should evaluate conditional blocks ([$WINDOWS], etc.).
+            </summary>
+        </member>
+        <member name="M:Gameloop.Vdf.VdfTextReader.ReadToken">
+            <summary>
+            Reads a single token. The value is stored in the 'Value' property.
+            </summary>
+            <returns>True if a token was read, false otherwise.</returns>
+        </member>
+        <member name="M:Gameloop.Vdf.VdfTextReader.SeekToken">
+            <summary>
+            Moves the pointer to the location of the first token character.
+            </summary>
+            <returns>True if a token is found, false otherwise.</returns>
+        </member>
+        <member name="M:Gameloop.Vdf.VdfTextReader.EnsureBuffer">
+            <summary>
+            Refills the buffer if we're at the end.
+            </summary>
+            <returns>False if the stream is empty, true otherwise.</returns>
+        </member>
+    </members>
+</doc>

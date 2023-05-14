@@ -1,0 +1,2372 @@
+﻿<Window
+    x:Class="PanelOS.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:PanelOS.Helpers"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Panel OS"
+    Width="930"
+    Height="480"
+    Background="#FF202124"
+    Closing="Window_Closing"
+    FontFamily="{materialDesign:MaterialDesignFont}"
+    Icon="/PanelOS;component/Images/logo256.ico"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <ResourceDictionary Source="../StyleOverrides.xaml" />
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" />
+    </WindowChrome.WindowChrome>
+
+    <Grid Background="#FF2E2F33">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+
+        <materialDesign:Snackbar
+            Name="MainWindowPopup"
+            Grid.Column="0"
+            Panel.ZIndex="1"
+            Background="#FF27282B"
+            Foreground="#FFB4B4B4"
+            MessageQueue="{Binding LauncherMessageQueue}" />
+
+        <Grid Grid.Column="0">
+            <Image
+                Width="20"
+                Height="18"
+                Margin="4,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Source="/PanelOS;component/Images/logo24.ico" />
+        </Grid>
+
+        <Grid Grid.Column="0">
+            <TabControl
+                Name="LauncherTabControl"
+                Margin="0,-2,0,0"
+                Padding="0,0,0,0"
+                Background="#FF202125"
+                BorderBrush="#00ACACAC"
+                BorderThickness="0" SelectionChanged="LauncherTabControl_SelectionChanged">
+
+                <!--  TabControl  -->
+
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TabPanel}">
+                        <Setter Property="HorizontalAlignment" Value="Right" />
+                        <Setter Property="Height" Value="18" />
+                    </Style>
+
+                    <Style TargetType="TabItem">
+                        <Setter Property="Foreground" Value="#FFBCBCBC" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Grid
+                                        Name="Panel"
+                                        Margin="0,0,-2,0"
+                                        Background="#FF28282A">
+                                        <ContentPresenter
+                                            x:Name="ContentSite"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            ContentSource="Header" />
+                                    </Grid>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="TextElement.Foreground" Value="#FFF1F1F1" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="TextElement.Foreground" Value="#FFF1F1F1" />
+                                            <Setter Property="TextElement.FontWeight" Value="Bold" />
+                                            <Setter TargetName="Panel" Property="Background" Value="#FF202125" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Panel" Property="Background" Value="#FF28282A" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+
+                <!--  Startscreen  -->
+
+                <TabItem
+                    Name="HomeTab"
+                    Width="50"
+                    Height="18"
+                    Padding="0"
+                    Background="#FF28282A"
+                    BorderBrush="#00ACACAC"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    FontSize="12"
+                    Header="Home"
+                    IsSelected="True">
+                    <Grid Cursor="Arrow">
+                        <Grid.Background>
+                            <ImageBrush ImageSource="/PanelOS;component/Images/main_background.png" Opacity="0.8" />
+                        </Grid.Background>
+                        <Grid Margin="50">
+                            <Grid.RowDefinitions>
+                            <RowDefinition Height="142*"/>
+                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="39*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Calibration button  -->
+
+                        <Button
+                            Name="CalibrationButton"
+                            Grid.Column="0"
+                            Width="160"
+                            Height="225"
+                            Padding="7"
+                            HorizontalContentAlignment="Left"
+                            materialDesign:ButtonAssist.CornerRadius="4"
+                            BorderBrush="Transparent"
+                            Click="CalibrationButton_Click"
+                            Opacity="0.85" Margin="25,68" Grid.RowSpan="3">
+
+                            <Button.Background>
+                                <ImageBrush ImageSource="/PanelOS;component/Images/calibration_background.png" Stretch="UniformToFill" />
+                            </Button.Background>
+
+                            <StackPanel
+                                Margin="0,0,0,10"
+                                HorizontalAlignment="Left"
+                                Orientation="Vertical">
+
+                                <Label
+                                    Margin="0,0,0,2"
+                                    Padding="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="16"
+                                    FontWeight="Normal"
+                                    Foreground="#FFFFF1D6">
+                                    Calibration
+                                </Label>
+
+                                <Label
+                                    Padding="0"
+                                    FontSize="9"
+                                    FontStretch="UltraExpanded"
+                                    FontWeight="Normal"
+                                    Foreground="#FFFFF1D6">
+                                    Calibrate your
+                                </Label>
+
+                                <Label
+                                    Margin="0,-1,0,0"
+                                    Padding="0"
+                                    FontSize="9"
+                                    FontStretch="UltraExpanded"
+                                    FontWeight="Normal"
+                                    Foreground="#FFFFF1D6">
+                                    bots for the rank LEM
+                                </Label>
+                            </StackPanel>
+                        </Button>
+
+                        <!--  Boost button  -->
+
+                        <Button
+                            Name="BoostButton"
+                            Grid.Column="1"
+                            Width="150"
+                            Height="225"
+                            Padding="9"
+                            HorizontalContentAlignment="Left"
+                            materialDesign:ButtonAssist.CornerRadius="4"
+                            BorderBrush="Transparent"
+                            Click="BoostButton_Click"
+                            Opacity="0.85" Margin="30,68" Grid.RowSpan="3">
+
+                            <Button.Background>
+                                <ImageBrush ImageSource="/PanelOS;component/Images/boost_background.png" Stretch="UniformToFill" />
+                            </Button.Background>
+
+                            <StackPanel
+                                Margin="0,0,0,10"
+                                HorizontalAlignment="Left"
+                                Orientation="Vertical">
+
+                                <Label
+                                    Margin="0,0,0,2"
+                                    Padding="0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="16"
+                                    FontWeight="Normal"
+                                    Foreground="#FFFFF1D6">
+                                    Boost
+                                </Label>
+
+                                <Label
+                                    Padding="0"
+                                    FontSize="9"
+                                    FontStretch="UltraExpanded"
+                                    FontWeight="Normal"
+                                    Foreground="#FFFFF1D6">
+                                    Mode for the
+                                </Label>
+
+                                <Label
+                                    Margin="0,-1,0,0"
+                                    Padding="0"
+                                    FontSize="9"
+                                    FontStretch="UltraExpanded"
+                                    FontWeight="Normal"
+                                    Foreground="#FFFFF1D6">
+                                    Boosters
+                                </Label>
+                            </StackPanel>
+                        </Button>
+
+                        <StackPanel
+                            Grid.Column="2"
+                            Height="225"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Orientation="Vertical" Margin="0,68" Grid.RowSpan="3">
+
+                            <!--  Community button  -->
+
+                            <Button
+                                Name="CommunityButton"
+                                Width="150"
+                                Height="100"
+                                Margin="0"
+                                Padding="10,20,0,0"
+                                HorizontalContentAlignment="Left"
+                                materialDesign:ButtonAssist.CornerRadius="4"
+                                BorderBrush="Transparent"
+                                Click="CommunityButton_Click"
+                                Opacity="0.9">
+
+                                <Button.Background>
+                                    <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <LinearGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                                                <SkewTransform CenterX="0.5" CenterY="0.5" />
+                                                <RotateTransform Angle="60" CenterX="0.5" CenterY="0.5" />
+                                                <TranslateTransform />
+                                            </TransformGroup>
+                                        </LinearGradientBrush.RelativeTransform>
+                                        <GradientStop Offset="1" Color="#FF0D5F78" />
+                                        <GradientStop Color="#FF3AA17E" />
+                                    </LinearGradientBrush>
+                                </Button.Background>
+
+                                <StackPanel
+                                    Margin="0,0,0,10"
+                                    HorizontalAlignment="Left"
+                                    Orientation="Vertical">
+
+                                    <Label
+                                        Margin="0,0,0,2"
+                                        Padding="0"
+                                        HorizontalAlignment="Left"
+                                        FontSize="16"
+                                        FontWeight="Normal"
+                                        Foreground="#FFFFF1D6">
+                                        Community
+                                    </Label>
+
+                                    <Label
+                                        Padding="0"
+                                        FontSize="9"
+                                        FontStretch="UltraExpanded"
+                                        FontWeight="Normal"
+                                        Foreground="#FFFFF1D6">
+                                        Our news and
+                                    </Label>
+
+                                    <Label
+                                        Margin="0,-1,0,0"
+                                        Padding="0"
+                                        FontSize="9"
+                                        FontStretch="UltraExpanded"
+                                        FontWeight="Normal"
+                                        Foreground="#FFFFF1D6">
+                                        discussions
+                                    </Label>
+                                </StackPanel>
+                            </Button>
+
+                            <!--  FAQ button  -->
+
+                            <Button
+                                Name="FAQButton"
+                                Width="150"
+                                Height="100"
+                                Margin="0,25,0,0"
+                                Padding="10,20,0,0"
+                                HorizontalContentAlignment="Left"
+                                materialDesign:ButtonAssist.CornerRadius="4"
+                                BorderBrush="Transparent"
+                                Click="FAQButton_Click"
+                                Opacity="0.9">
+
+                                <Button.Background>
+                                    <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <LinearGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterX="0.5" CenterY="0.5" />
+                                                <SkewTransform CenterX="0.5" CenterY="0.5" />
+                                                <RotateTransform Angle="40" CenterX="0.5" CenterY="0.5" />
+                                                <TranslateTransform />
+                                            </TransformGroup>
+                                        </LinearGradientBrush.RelativeTransform>
+                                        <GradientStop Color="#FF6F367E" />
+                                        <GradientStop Offset="1" Color="#FFC7347B" />
+                                    </LinearGradientBrush>
+                                </Button.Background>
+
+                                <StackPanel
+                                    Margin="0,0,0,10"
+                                    HorizontalAlignment="Left"
+                                    Orientation="Vertical">
+
+                                    <Label
+                                        Margin="0,0,0,2"
+                                        Padding="0"
+                                        HorizontalAlignment="Left"
+                                        FontSize="16"
+                                        FontWeight="Normal"
+                                        Foreground="#FFFFF1D6">
+                                        FAQ
+                                    </Label>
+
+                                    <Label
+                                        Padding="0"
+                                        FontSize="9"
+                                        FontStretch="UltraExpanded"
+                                        FontWeight="Normal"
+                                        Foreground="#FFFFF1D6">
+                                        Answers
+                                    </Label>
+
+                                    <Label
+                                        Margin="0,-1,0,0"
+                                        Padding="0"
+                                        FontSize="9"
+                                        FontStretch="UltraExpanded"
+                                        FontWeight="Normal"
+                                        Foreground="#FFFFF1D6">
+                                        to the questions
+                                    </Label>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+        </Grid>
+        </TabItem>
+
+                <!--  Calibration tab  -->
+
+                <TabItem
+                    Name="CalibrationTab"
+                    Width="80"
+                    Height="18"
+                    Padding="0"
+                    Background="#FF28282A"
+                    BorderBrush="#00ACACAC"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    FontSize="12"
+                    Header="Calibration">
+
+                    <ScrollViewer
+                        Margin="0,5,0,5"
+                        Cursor="Arrow"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Visible">
+
+                        <ItemsControl Name="CalibrationPanel" Cursor="Arrow">
+                            <ItemsControl.Resources>
+                                <CollectionViewSource x:Key="CalibrationLobbiesCollection" Source="{Binding CalibrationLobbies}" />
+                            </ItemsControl.Resources>
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid
+                                        Width="150"
+                                        Height="210"
+                                        Margin="20,10,10,5">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="16" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.Background>
+                                            <ImageBrush
+                                                ImageSource="/PanelOS;component/Images/lobby_background.png"
+                                                Opacity="0.5"
+                                                Stretch="UniformToFill" />
+                                        </Grid.Background>
+
+                                        <!--  Lobby header  -->
+
+                                        <Grid
+                                            Grid.Row="0"
+                                            Height="16"
+                                            Margin="0"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Background="#7F31363F">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="16" />
+                                                <ColumnDefinition Width="16" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label
+                                                Grid.Column="0"
+                                                Margin="5,0,0,0"
+                                                Padding="0"
+                                                VerticalAlignment="Center"
+                                                Content="{Binding Name}"
+                                                FontSize="12" />
+
+                                            <Button
+                                                Grid.Column="1"
+                                                Width="16"
+                                                Height="16"
+                                                Padding="0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                materialDesign:ButtonAssist.CornerRadius="2,0,0,2"
+                                                Background="#FF2B2B2D"
+                                                BorderThickness="0"
+                                                Command="{Binding DataContext.StartCalibrationLobbyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
+
+                                                <materialDesign:PackIcon
+                                                    Width="16"
+                                                    Height="16"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalContentAlignment="Center"
+                                                    VerticalContentAlignment="Center">
+
+                                                    <materialDesign:PackIcon.Style>
+                                                        <Style TargetType="materialDesign:PackIcon">
+                                                            <Setter Property="Kind" Value="Play" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=Active}" Value="True">
+                                                                    <Setter Property="Kind" Value="Record" />
+                                                                    <Setter Property="Foreground" Value="DarkRed" />
+                                                                </DataTrigger>
+
+                                                                <DataTrigger Binding="{Binding Path=Active}" Value="False">
+                                                                    <Setter Property="Kind" Value="Play" />
+                                                                    <Setter Property="Foreground" Value="Gray" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </materialDesign:PackIcon.Style>
+                                                </materialDesign:PackIcon>
+                                            </Button>
+
+                                            <Button
+                                                Grid.Column="2"
+                                                Width="16"
+                                                Height="16"
+                                                Padding="0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                materialDesign:ButtonAssist.CornerRadius="0"
+                                                Background="#FF2B2B2D"
+                                                BorderThickness="0"
+                                                Command="{Binding DataContext.DeleteCalibrationLobbyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
+
+                                                <materialDesign:PackIcon
+                                                    Width="16"
+                                                    Height="16"
+                                                    Padding="0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalContentAlignment="Center"
+                                                    VerticalContentAlignment="Center"
+                                                    Foreground="Gray"
+                                                    Kind="Close" />
+                                            </Button>
+                                        </Grid>
+
+                                        <materialDesign:Card
+                                            Grid.Row="1"
+                                            Margin="3"
+                                            Padding="0,0,0,10"
+                                            materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                                            Background="#8C242527"
+                                            UniformCornerRadius="5">
+
+                                            <!--  Account lists  -->
+
+                                            <ScrollViewer>
+                                                <Grid Margin="0,5,0,0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="13" />
+                                                        <RowDefinition Height="45" />
+                                                        <RowDefinition Height="13" />
+                                                        <RowDefinition Height="85" />
+                                                        <RowDefinition Height="13" />
+                                                        <RowDefinition Height="85" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <Label
+                                                        Grid.Row="0"
+                                                        Margin="5,0,0,0"
+                                                        Padding="0"
+                                                        FontSize="10"
+                                                        Foreground="#DDE4E3E3">
+                                                        Leaders
+                                                    </Label>
+
+                                                    <StackPanel Grid.Row="1" Margin="0">
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Leader1}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="Red" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Leader2}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="Red" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+                                                    </StackPanel>
+
+                                                    <Label
+                                                        Grid.Row="2"
+                                                        Margin="5,0,0,0"
+                                                        Padding="0"
+                                                        FontSize="10"
+                                                        Foreground="#DDE4E3E3">
+                                                        Winners
+                                                    </Label>
+
+                                                    <StackPanel Grid.Row="3" Margin="0">
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Winner1}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="Red" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Winner2}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="Red" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Winner3}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="Red" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Winner4}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="Red" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+                                                    </StackPanel>
+
+                                                    <Label
+                                                        Grid.Row="4"
+                                                        Margin="5,0,0,0"
+                                                        Padding="0"
+                                                        FontSize="10"
+                                                        Foreground="#DDE4E3E3">
+                                                        Losers
+                                                    </Label>
+
+                                                    <StackPanel Grid.Row="5" Margin="0">
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Loser1}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="Red" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Loser2}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="#FF850000" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Loser3}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="Red" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+
+                                                        <Border>
+                                                            <Border.Style>
+                                                                <Style>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                            <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <ComboBox
+                                                                Height="20"
+                                                                Margin="5,0,5,0"
+                                                                Padding="0"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                VerticalContentAlignment="Center"
+                                                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                                BorderThickness="0"
+                                                                DisplayMemberPath="Login"
+                                                                DropDownClosed="ComboBox_DropDownClosed"
+                                                                FontSize="10"
+                                                                Foreground="#FFA1A1A1"
+                                                                ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                SelectedValue="{Binding Loser4}"
+                                                                SelectedValuePath="AccountId"
+                                                                SelectionChanged="CalibrationComboBox_SelectionChanged">
+
+                                                                <Validation.ErrorTemplate>
+                                                                    <ControlTemplate>
+                                                                        <StackPanel>
+                                                                            <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                            <TextBlock Foreground="Red" Text="" />
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Validation.ErrorTemplate>
+                                                            </ComboBox>
+                                                        </Border>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </ScrollViewer>
+                                        </materialDesign:Card>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                            <!--  [+] button  -->
+
+                            <ItemsControl.ItemsSource>
+                                <CompositeCollection>
+                                    <CollectionContainer Collection="{Binding Source={StaticResource CalibrationLobbiesCollection}}" />
+                                    <Border
+                                        Width="110"
+                                        Height="150"
+                                        Margin="35,40,35,35"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        BorderThickness="2">
+
+                                        <Border.BorderBrush>
+                                            <VisualBrush>
+                                                <VisualBrush.Visual>
+                                                    <Rectangle
+                                                        Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                                                        Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
+                                                        RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                                                        RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                                                        Stroke="#FF606060"
+                                                        StrokeDashArray="4 2"
+                                                        StrokeThickness="1.25" />
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Border.BorderBrush>
+
+                                        <Button
+                                            Width="110"
+                                            Height="150"
+                                            Margin="0"
+                                            Padding="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            BorderBrush="#FF2E2F31"
+                                            BorderThickness="0"
+                                            Command="{Binding AddCalibrationLobbyCommand}"
+                                            Style="{DynamicResource MaterialDesignFlatButton}">
+
+                                            <materialDesign:PackIcon
+                                                Width="50"
+                                                Height="50"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Foreground="#FF606060"
+                                                Kind="Plus" />
+                                        </Button>
+                                    </Border>
+                                </CompositeCollection>
+                            </ItemsControl.ItemsSource>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!--  Boost tab  -->
+
+                <TabItem
+                    Name="BoostingTab"
+                    Width="50"
+                    Height="18"
+                    Padding="0"
+                    Background="#FF28282A"
+                    BorderBrush="#00ACACAC"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    FontSize="12"
+                    Header="Boost">
+
+                    <ScrollViewer
+                        Margin="0,5,0,5"
+                        Cursor="Arrow"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Visible">
+
+                        <ItemsControl Name="BoostingLobbyPanel" Cursor="Arrow">
+                            <ItemsControl.Resources>
+                                <CollectionViewSource x:Key="BoostingLobbiesCollection" Source="{Binding BoostingLobbies}" />
+                            </ItemsControl.Resources>
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid
+                                        Width="150"
+                                        Height="210"
+                                        Margin="20,10,10,5">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="16" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.Background>
+                                            <ImageBrush
+                                                ImageSource="/PanelOS;component/Images/lobby_background.png"
+                                                Opacity="0.5"
+                                                Stretch="UniformToFill" />
+                                        </Grid.Background>
+
+                                        <!--  Lobby header  -->
+
+                                        <Grid
+                                            Grid.Row="0"
+                                            Height="16"
+                                            Margin="0"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Background="#7F31363F">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="16" />
+                                                <ColumnDefinition Width="16" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label
+                                                Grid.Column="0"
+                                                Margin="5,0,0,0"
+                                                Padding="0"
+                                                VerticalAlignment="Center"
+                                                Content="{Binding Name}"
+                                                FontSize="12" />
+
+                                            <Button
+                                                Grid.Column="1"
+                                                Width="16"
+                                                Height="16"
+                                                Padding="0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                materialDesign:ButtonAssist.CornerRadius="2,0,0,2"
+                                                Background="#FF2B2B2D"
+                                                BorderThickness="0"
+                                                Command="{Binding DataContext.StartBoostingLobbyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
+
+                                                <materialDesign:PackIcon
+                                                    Width="16"
+                                                    Height="16"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalContentAlignment="Center"
+                                                    VerticalContentAlignment="Center">
+
+                                                    <materialDesign:PackIcon.Style>
+                                                        <Style TargetType="materialDesign:PackIcon">
+                                                            <Setter Property="Kind" Value="Play" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=Active}" Value="True">
+                                                                    <Setter Property="Kind" Value="Record" />
+                                                                    <Setter Property="Foreground" Value="DarkRed" />
+                                                                </DataTrigger>
+
+                                                                <DataTrigger Binding="{Binding Path=Active}" Value="False">
+                                                                    <Setter Property="Kind" Value="Play" />
+                                                                    <Setter Property="Foreground" Value="Gray" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </materialDesign:PackIcon.Style>
+                                                </materialDesign:PackIcon>
+                                            </Button>
+
+                                            <Button
+                                                Grid.Column="2"
+                                                Width="16"
+                                                Height="16"
+                                                Padding="0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                materialDesign:ButtonAssist.CornerRadius="0"
+                                                Background="#FF2B2B2D"
+                                                BorderThickness="0"
+                                                Command="{Binding DataContext.DeleteBoostingLobbyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{DynamicResource MaterialDesignFlatButton}">
+
+                                                <materialDesign:PackIcon
+                                                    Width="16"
+                                                    Height="16"
+                                                    Padding="0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalContentAlignment="Center"
+                                                    VerticalContentAlignment="Center"
+                                                    Foreground="Gray"
+                                                    Kind="Close" />
+                                            </Button>
+                                        </Grid>
+
+                                        <materialDesign:Card
+                                            Grid.Row="1"
+                                            Margin="3"
+                                            Padding="0"
+                                            materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                                            Background="#8C242527"
+                                            UniformCornerRadius="5">
+
+                                            <!--  Account lists  -->
+
+                                            <StackPanel Margin="0,3,0,0">
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                    <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ComboBox
+                                                        Height="20"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Left"
+                                                        VerticalContentAlignment="Center"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                        BorderThickness="0"
+                                                        DisplayMemberPath="Login"
+                                                        DropDownClosed="ComboBox_DropDownClosed"
+                                                        FontSize="10"
+                                                        Foreground="#FFA1A1A1"
+                                                        IsSynchronizedWithCurrentItem="False"
+                                                        ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                        SelectedValue="{Binding Player1}"
+                                                        SelectedValuePath="AccountId"
+                                                        SelectionChanged="BoostingComboBox_SelectionChanged">
+
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <StackPanel>
+                                                                    <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                    <TextBlock Foreground="Red" Text="" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </ComboBox>
+                                                </Border>
+
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                    <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ComboBox
+                                                        Height="20"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Left"
+                                                        VerticalContentAlignment="Center"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                        BorderThickness="0"
+                                                        DisplayMemberPath="Login"
+                                                        DropDownClosed="ComboBox_DropDownClosed"
+                                                        FontSize="10"
+                                                        Foreground="#FFA1A1A1"
+                                                        ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                        SelectedValue="{Binding Player2}"
+                                                        SelectedValuePath="AccountId"
+                                                        SelectionChanged="BoostingComboBox_SelectionChanged">
+
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <StackPanel>
+                                                                    <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                    <TextBlock Foreground="Red" Text="" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </ComboBox>
+                                                </Border>
+
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                    <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ComboBox
+                                                        Height="20"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Left"
+                                                        VerticalContentAlignment="Center"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                        BorderThickness="0"
+                                                        DisplayMemberPath="Login"
+                                                        DropDownClosed="ComboBox_DropDownClosed"
+                                                        FontSize="10"
+                                                        Foreground="#FFA1A1A1"
+                                                        ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                        SelectedValue="{Binding Player3}"
+                                                        SelectedValuePath="AccountId"
+                                                        SelectionChanged="BoostingComboBox_SelectionChanged">
+
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <StackPanel>
+                                                                    <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                    <TextBlock Foreground="Red" Text="" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </ComboBox>
+                                                </Border>
+
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                    <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ComboBox
+                                                        Height="20"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Left"
+                                                        VerticalContentAlignment="Center"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                        BorderThickness="0"
+                                                        DisplayMemberPath="Login"
+                                                        DropDownClosed="ComboBox_DropDownClosed"
+                                                        FontSize="10"
+                                                        Foreground="#FFA1A1A1"
+                                                        ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                        SelectedValue="{Binding Player4}"
+                                                        SelectedValuePath="AccountId"
+                                                        SelectionChanged="BoostingComboBox_SelectionChanged">
+
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <StackPanel>
+                                                                    <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                    <TextBlock Foreground="Red" Text="" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </ComboBox>
+                                                </Border>
+
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                    <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ComboBox
+                                                        Height="20"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Left"
+                                                        VerticalContentAlignment="Center"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                        BorderThickness="0"
+                                                        DisplayMemberPath="Login"
+                                                        DropDownClosed="ComboBox_DropDownClosed"
+                                                        FontSize="10"
+                                                        Foreground="#FFA1A1A1"
+                                                        ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                        SelectedValue="{Binding Player5}"
+                                                        SelectedValuePath="AccountId"
+                                                        SelectionChanged="BoostingComboBox_SelectionChanged">
+
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <StackPanel>
+                                                                    <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                    <TextBlock Foreground="Red" Text="" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </ComboBox>
+                                                </Border>
+
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                    <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ComboBox
+                                                        Height="20"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Left"
+                                                        VerticalContentAlignment="Center"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                        BorderThickness="0"
+                                                        DisplayMemberPath="Login"
+                                                        DropDownClosed="ComboBox_DropDownClosed"
+                                                        FontSize="10"
+                                                        Foreground="#FFA1A1A1"
+                                                        ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                        SelectedValue="{Binding Player6}"
+                                                        SelectedValuePath="AccountId"
+                                                        SelectionChanged="BoostingComboBox_SelectionChanged">
+
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <StackPanel>
+                                                                    <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                    <TextBlock Foreground="Red" Text="" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </ComboBox>
+                                                </Border>
+
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                    <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ComboBox
+                                                        Height="20"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Left"
+                                                        VerticalContentAlignment="Center"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                        BorderThickness="0"
+                                                        DisplayMemberPath="Login"
+                                                        DropDownClosed="ComboBox_DropDownClosed"
+                                                        FontSize="10"
+                                                        Foreground="#FFA1A1A1"
+                                                        ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                        SelectedValue="{Binding Player7}"
+                                                        SelectedValuePath="AccountId"
+                                                        SelectionChanged="BoostingComboBox_SelectionChanged">
+
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <StackPanel>
+                                                                    <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                    <TextBlock Foreground="Red" Text="" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </ComboBox>
+                                                </Border>
+
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                    <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ComboBox
+                                                        Height="20"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Left"
+                                                        VerticalContentAlignment="Center"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                        BorderThickness="0"
+                                                        DisplayMemberPath="Login"
+                                                        DropDownClosed="ComboBox_DropDownClosed"
+                                                        FontSize="10"
+                                                        Foreground="#FFA1A1A1"
+                                                        ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                        SelectedValue="{Binding Player8}"
+                                                        SelectedValuePath="AccountId"
+                                                        SelectionChanged="BoostingComboBox_SelectionChanged">
+
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <StackPanel>
+                                                                    <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                    <TextBlock Foreground="Red" Text="" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </ComboBox>
+                                                </Border>
+
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                    <Setter Property="Border.Background" Value="#FF24272E" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ComboBox
+                                                        Height="20"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Left"
+                                                        VerticalContentAlignment="Center"
+                                                        materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                        BorderThickness="0"
+                                                        DisplayMemberPath="Login"
+                                                        DropDownClosed="ComboBox_DropDownClosed"
+                                                        FontSize="10"
+                                                        Foreground="#FFA1A1A1"
+                                                        ItemsSource="{Binding DataContext.Accounts, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                        SelectedValue="{Binding Player9}"
+                                                        SelectedValuePath="AccountId"
+                                                        SelectionChanged="BoostingComboBox_SelectionChanged">
+
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <StackPanel>
+                                                                    <AdornedElementPlaceholder x:Name="comboBox" />
+                                                                    <TextBlock Foreground="Red" Text="" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </ComboBox>
+                                                </Border>
+                                            </StackPanel>
+                                        </materialDesign:Card>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                            <!--  [+] button  -->
+
+                            <ItemsControl.ItemsSource>
+                                <CompositeCollection>
+                                    <CollectionContainer Collection="{Binding Source={StaticResource BoostingLobbiesCollection}}" />
+                                    <Border
+                                        Width="110"
+                                        Height="150"
+                                        Margin="35,40,35,35"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        BorderThickness="2">
+
+                                        <Border.BorderBrush>
+                                            <VisualBrush>
+                                                <VisualBrush.Visual>
+                                                    <Rectangle
+                                                        Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                                                        Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
+                                                        RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                                                        RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                                                        Stroke="#FF606060"
+                                                        StrokeDashArray="4 2"
+                                                        StrokeThickness="1.25" />
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Border.BorderBrush>
+
+                                        <Button
+                                            Width="110"
+                                            Height="150"
+                                            Margin="0"
+                                            Padding="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            BorderBrush="#FF2E2F31"
+                                            BorderThickness="0"
+                                            Command="{Binding AddBoostingLobbyCommand}"
+                                            Style="{DynamicResource MaterialDesignFlatButton}">
+
+                                            <materialDesign:PackIcon
+                                                Width="50"
+                                                Height="50"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                Foreground="#FF606060"
+                                                Kind="Plus" />
+                                        </Button>
+                                    </Border>
+                                </CompositeCollection>
+                            </ItemsControl.ItemsSource>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+        <!--  Right menu and accounts list  -->
+
+        <Grid Grid.Column="1">
+            <Grid.Background>
+                <ImageBrush ImageSource="/PanelOS;component/Images/accounts_background.png" Opacity="0.8" />
+            </Grid.Background>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+
+                <!--  Top right control buttons  -->
+
+                <StackPanel
+                    Grid.Row="0"
+                    HorizontalAlignment="Stretch"
+                    Background="#FF2E2F33"
+                    Orientation="Horizontal">
+
+                    <Button
+                        Name="ClickerButton"
+                        Width="50"
+                        Height="18"
+                        Margin="20,0,10,0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        materialDesign:ButtonAssist.CornerRadius="0,0,0,0"
+                        Background="#FF3C3E41"
+                        BorderThickness="0"
+                        Click="ClickerButton_Click"
+                        Content="Clicker"
+                        FontSize="12"
+                        Foreground="#FFA6A6A6"
+                        Style="{DynamicResource MaterialDesignFlatButton}" />
+
+                    <Button
+                        Name="SettingsButton"
+                        Width="60"
+                        Height="18"
+                        Margin="0,0,10,0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        materialDesign:ButtonAssist.CornerRadius="0,0,0,0"
+                        Background="#FF3C3E41"
+                        BorderThickness="0"
+                        Click="SettingsButton_Click"
+                        Style="{DynamicResource MaterialDesignFlatButton}">
+
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+
+                            <materialDesign:PackIcon
+                                Margin="0"
+                                Padding="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="Gray"
+                                Kind="Gear" />
+
+                            <Label
+                                Padding="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                FontSize="10"
+                                Foreground="#FFA6A6A6">
+                                Settings
+                            </Label>
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        Name="MinimizeWindowButton"
+                        Width="20"
+                        Height="18"
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        materialDesign:ButtonAssist.CornerRadius="0"
+                        Background="#FF3D3E41"
+                        BorderThickness="0"
+                        Click="MinimizeWindowButton_Click"
+                        Style="{DynamicResource MaterialDesignFlatButton}">
+
+                        <materialDesign:PackIcon
+                            Width="12"
+                            Height="12"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Foreground="Gray"
+                            Kind="WindowMinimize" />
+                    </Button>
+
+                    <Button
+                        Name="CloseWindowButton"
+                        Width="30"
+                        Height="18"
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        materialDesign:ButtonAssist.CornerRadius="0"
+                        Background="#FF525356"
+                        BorderThickness="0"
+                        Click="CloseWindowButton_Click"
+                        Style="{DynamicResource MaterialDesignFlatButton}">
+
+                        <materialDesign:PackIcon
+                            Width="16"
+                            Height="16"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Foreground="Gray"
+                            Kind="Close" />
+                    </Button>
+                </StackPanel>
+
+                <!--  Accounts  -->
+
+                <StackPanel
+                    Grid.Row="1"
+                    Margin="5,0,5,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+
+                    <Label
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Roboto"
+                        FontSize="24"
+                        Foreground="#DD939393">
+                        Accounts
+                    </Label>
+
+                    <Border
+                        Width="50"
+                        Height="25"
+                        Margin="5,0,0,0"
+                        Padding="0"
+                        BorderThickness="2">
+
+                        <Border.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="Border.IsMouseOver" Value="True">
+                                        <Setter Property="Border.Background" Value="#333372C2" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <Border.BorderBrush>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Rectangle
+                                        Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                                        Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
+                                        RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                                        RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                                        Stroke="#FF3372C2"
+                                        StrokeDashArray="3 1"
+                                        StrokeThickness="1" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.BorderBrush>
+
+                        <Button
+                            Name="AddAccountButton"
+                            Width="50"
+                            Height="25"
+                            Padding="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Bottom"
+                            materialDesign:RippleAssist.Feedback="#FF3372C2"
+                            materialDesign:RippleAssist.RippleSizeMultiplier="1"
+                            BorderBrush="#FF2E2F31"
+                            Command="{Binding AddAccountCommand}"
+                            Content="Add"
+                            FontSize="20"
+                            Foreground="#FF3372C2"
+                            Style="{DynamicResource MaterialDesignFlatButton}" />
+                    </Border>
+
+                    <Border
+                        Width="25"
+                        Height="25"
+                        Margin="5,0,0,0"
+                        Padding="0"
+                        BorderThickness="2">
+
+                        <Border.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="Border.IsMouseOver" Value="True">
+                                        <Setter Property="Border.Background" Value="#33CF6700" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <Border.BorderBrush>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Rectangle
+                                        Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                                        Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
+                                        RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                                        RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                                        Stroke="#FFCF6700"
+                                        StrokeDashArray="3 1"
+                                        StrokeThickness="1" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.BorderBrush>
+
+                        <Button
+                            Name="DeleteAccountButton"
+                            Width="25"
+                            Height="25"
+                            Padding="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            materialDesign:RippleAssist.Feedback="#FFCF6700"
+                            materialDesign:RippleAssist.RippleSizeMultiplier="1"
+                            Command="{Binding DeleteAccountCommand}"
+                            Style="{DynamicResource MaterialDesignFlatButton}">
+
+                            <materialDesign:PackIcon
+                                Width="19"
+                                Height="19"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Foreground="#FFCF6700"
+                                Kind="TrashOutline" />
+                        </Button>
+                    </Border>
+                </StackPanel>
+
+                <ListBox
+                    Name="AccountColorsFilter"
+                    Grid.Row="2"
+                    Margin="0,0,0,0"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    materialDesign:RippleAssist.IsDisabled="True"
+                    Background="Transparent"
+                    ItemsSource="{Binding ColorFilters}"
+                    SelectedIndex="0"
+                    SelectionChanged="AccountColorsFilter_SelectionChanged"
+                    SelectionMode="Multiple"
+                    Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:PackIcon
+                                Width="20"
+                                Height="20"
+                                Foreground="{Binding BookmarkColor}"
+                                Kind="{Binding BookmarkKind}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                    <ListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource MaterialDesignToolToggleListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="IsSelected" Value="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Width" Value="20" />
+                            <Setter Property="Height" Value="20" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ie:Interaction.Triggers>
+                        <ie:EventTrigger EventName="SelectionChanged">
+                            <ie:InvokeCommandAction Command="{Binding SelectedColorChangedCommand}" />
+                        </ie:EventTrigger>
+                    </ie:Interaction.Triggers>
+                </ListBox>
+
+                <materialDesign:Card
+                    Grid.Row="3"
+                    Margin="5,0,5,0"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                    Background="#4C242527"
+                    UniformCornerRadius="5">
+
+                    <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                        <ItemsControl
+                            Name="AccountsList"
+                            Margin="0,5,0,5"
+                            Padding="0"
+                            materialDesign:RippleAssist.IsDisabled="True"
+                            ItemsSource="{Binding FilteredAccounts, UpdateSourceTrigger=PropertyChanged}">
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="16" />
+                                            <RowDefinition Height="5" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Name="AccountRow" Background="#4C303032">
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="130" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <CheckBox
+                                                    Grid.Column="0"
+                                                    Margin="1"
+                                                    IsChecked="{Binding IsChecked}"
+                                                    Opacity="0.3" />
+
+                                                <materialDesign:PopupBox
+                                                    Grid.Column="1"
+                                                    Margin="0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    PlacementMode="BottomAndAlignCentres"
+                                                    UnfurlOrientation="Horizontal">
+
+                                                    <materialDesign:PopupBox.ToggleContent>
+                                                        <materialDesign:PackIcon
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="{Binding Color}">
+
+                                                            <materialDesign:PackIcon.Style>
+                                                                <Style TargetType="materialDesign:PackIcon">
+                                                                    <Setter Property="Kind" Value="Bookmark" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Path=Color}" Value="Gray">
+                                                                            <Setter Property="Kind" Value="BookmarkBorder" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </materialDesign:PackIcon.Style>
+                                                        </materialDesign:PackIcon>
+                                                    </materialDesign:PopupBox.ToggleContent>
+
+                                                    <ListBox
+                                                        Name="AccountColorPopup"
+                                                        Margin="5,0,5,0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Center"
+                                                        materialDesign:RippleAssist.IsDisabled="True"
+                                                        Background="Transparent"
+                                                        ItemsSource="{Binding DataContext.ColorFilters, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        SelectedValuePath="BookmarkColor"
+                                                        SelectionChanged="AccountColorPopup_SelectionChanged"
+                                                        SelectionMode="Single"
+                                                        Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
+
+                                                        <ListBox.Resources>
+                                                            <local:AccountColorConverter x:Key="ColorConverter" />
+                                                        </ListBox.Resources>
+
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <materialDesign:PackIcon
+                                                                    Width="20"
+                                                                    Height="20"
+                                                                    Foreground="{Binding BookmarkColor}"
+                                                                    Kind="{Binding BookmarkKind}" />
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+
+                                                        <ListBox.ItemContainerStyle>
+                                                            <Style BasedOn="{StaticResource MaterialDesignToolToggleListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                                                                <Setter Property="Padding" Value="0" />
+                                                                <Setter Property="Width" Value="20" />
+                                                                <Setter Property="Height" Value="20" />
+                                                            </Style>
+                                                        </ListBox.ItemContainerStyle>
+
+                                                        <ie:Interaction.Triggers>
+                                                            <ie:EventTrigger EventName="SelectionChanged">
+                                                                <ie:InvokeCommandAction Command="{Binding DataContext.AccountColorChangedCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                                                    <ie:InvokeCommandAction.CommandParameter>
+                                                                        <MultiBinding Converter="{StaticResource ColorConverter}">
+                                                                            <Binding />
+                                                                            <Binding ElementName="AccountColorPopup" Path="SelectedValue" />
+                                                                        </MultiBinding>
+                                                                    </ie:InvokeCommandAction.CommandParameter>
+                                                                </ie:InvokeCommandAction>
+                                                            </ie:EventTrigger>
+                                                        </ie:Interaction.Triggers>
+                                                    </ListBox>
+                                                </materialDesign:PopupBox>
+
+                                                <Label
+                                                    Grid.Column="2"
+                                                    Margin="3,0,0,0"
+                                                    Padding="0"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalContentAlignment="Center"
+                                                    VerticalContentAlignment="Center"
+                                                    Content="{Binding Login}"
+                                                    FontSize="12"
+                                                    Foreground="Silver" />
+
+                                                <Ellipse
+                                                    Grid.Column="3"
+                                                    Width="10"
+                                                    Height="10"
+                                                    HorizontalAlignment="Right">
+
+                                                    <Ellipse.Style>
+                                                        <Style TargetType="Ellipse">
+                                                            <Setter Property="Fill" Value="Transparent" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=Active}" Value="True">
+                                                                    <Setter Property="Fill" Value="Green" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Ellipse.Style>
+                                                </Ellipse>
+                                            </Grid>
+                                        </Grid>
+
+                                        <Separator
+                                            Grid.Row="1"
+                                            Width="100"
+                                            Margin="45,0,45,0"
+                                            Padding="10,0,10,0"
+                                            Background="#FF3E3E3E"
+                                            IsEnabled="False"
+                                            Opacity="0.3" />
+                                    </Grid>
+
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="AccountRow" Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <GradientStop Offset="0" Color="#FF263149" />
+                                                        <GradientStop Offset="1" Color="#FF2C313C" />
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </materialDesign:Card>
+
+                <!--  Bottom right buttons  -->
+
+                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                    <Border
+                        Width="110"
+                        Height="40"
+                        Margin="5,0,0,0"
+                        Padding="0"
+                        BorderThickness="2">
+
+                        <Border.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="Border.IsMouseOver" Value="True">
+                                        <Setter Property="Border.Background" Value="#33387042" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <Border.BorderBrush>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Rectangle
+                                        Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                                        Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
+                                        RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                                        RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                                        Stroke="#387042"
+                                        StrokeDashArray="5 1.5"
+                                        StrokeThickness="1" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.BorderBrush>
+
+                        <Button
+                            Name="LaunchButton"
+                            Width="110"
+                            Height="40"
+                            Padding="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            materialDesign:RippleAssist.Feedback="#387042"
+                            materialDesign:RippleAssist.RippleSizeMultiplier="2"
+                            BorderBrush="#FF2E2F31"
+                            Command="{Binding StartAccountsCommand}"
+                            Content="Launch"
+                            FontSize="20"
+                            Foreground="#387042"
+                            Style="{DynamicResource MaterialDesignFlatButton}" />
+                    </Border>
+
+                    <StackPanel Margin="0,5,0,5" Orientation="Vertical">
+                        <Border
+                            Width="30"
+                            Height="18"
+                            Margin="5,0,0,2"
+                            Padding="0"
+                            BorderThickness="2">
+
+                            <Border.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                            <Setter Property="Border.Background" Value="#338E6929" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <Border.BorderBrush>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <Rectangle
+                                            Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                                            Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
+                                            RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                                            RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                                            Stroke="#8e6929"
+                                            StrokeDashArray="4 1.5"
+                                            StrokeThickness="1" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.BorderBrush>
+
+                            <Button
+                                Name="RestartAccountButton"
+                                Width="30"
+                                Height="18"
+                                Padding="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                materialDesign:RippleAssist.Feedback="#8e6929"
+                                materialDesign:RippleAssist.RippleSizeMultiplier="1.5"
+                                BorderBrush="#FF2E2F31"
+                                Command="{Binding RestartAccountsCommand}"
+                                FontSize="10"
+                                Style="{DynamicResource MaterialDesignFlatButton}">
+
+                                <materialDesign:PackIcon
+                                    Width="16"
+                                    Height="16"
+                                    Foreground="#8e6929"
+                                    Kind="Restart"
+                                    RenderTransformOrigin="0.5,0.5">
+
+                                    <materialDesign:PackIcon.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="-1" ScaleY="1" />
+                                            <SkewTransform AngleX="0" AngleY="0" />
+                                            <RotateTransform Angle="56" />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </materialDesign:PackIcon.RenderTransform>
+                                </materialDesign:PackIcon>
+                            </Button>
+                        </Border>
+
+                        <Border
+                            Width="30"
+                            Height="18"
+                            Margin="5,2,0,0"
+                            Padding="0"
+                            BorderThickness="2">
+
+                            <Border.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <Trigger Property="Border.IsMouseOver" Value="True">
+                                            <Setter Property="Border.Background" Value="#33912E0A" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <Border.BorderBrush>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <Rectangle
+                                            Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                                            Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
+                                            RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                                            RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                                            Stroke="#FF912E0A"
+                                            StrokeDashArray="4 1.5"
+                                            StrokeThickness="1" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.BorderBrush>
+
+                            <Button
+                                Name="StopAccountButton"
+                                Width="30"
+                                Height="18"
+                                Padding="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                materialDesign:RippleAssist.Feedback="#FF912E0A"
+                                materialDesign:RippleAssist.RippleSizeMultiplier="1.5"
+                                Command="{Binding StopAccountsCommand}"
+                                FontSize="10"
+                                Style="{DynamicResource MaterialDesignFlatButton}">
+
+                                <materialDesign:PackIcon
+                                    Width="18"
+                                    Height="18"
+                                    Foreground="#FF912E0A"
+                                    Kind="Close" />
+                            </Button>
+                        </Border>
+                    </StackPanel>
+
+                    <Border
+                        Width="40"
+                        Height="40"
+                        Margin="5,0,0,0"
+                        Padding="0"
+                        BorderThickness="2">
+
+                        <Border.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="Border.IsMouseOver" Value="True">
+                                        <Setter Property="Border.Background" Value="#339E2F2F" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <Border.BorderBrush>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Rectangle
+                                        Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                                        Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
+                                        RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                                        RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                                        Stroke="#FF9E2F2F"
+                                        StrokeDashArray="5 1.5"
+                                        StrokeThickness="1" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.BorderBrush>
+
+                        <Button
+                            Name="CloseAllAccountsButton"
+                            Width="40"
+                            Height="40"
+                            Padding="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            materialDesign:RippleAssist.Feedback="#FF9E2F2F"
+                            materialDesign:RippleAssist.RippleSizeMultiplier="1.5"
+                            Command="{Binding StopAllAccountsCommand}"
+                            FontSize="11"
+                            Style="{DynamicResource MaterialDesignFlatButton}">
+
+                            <TextBlock
+                                Padding="0"
+                                Foreground="#FF9E2F2F"
+                                TextAlignment="Center">
+                                Close<LineBreak />
+                                all</TextBlock>
+                        </Button>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

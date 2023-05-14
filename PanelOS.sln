@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanelOS", "PanelOS\PanelOS.csproj", "{093C19BB-4CC8-461E-9FB5-E5CCE61CCE8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{093C19BB-4CC8-461E-9FB5-E5CCE61CCE8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{093C19BB-4CC8-461E-9FB5-E5CCE61CCE8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{093C19BB-4CC8-461E-9FB5-E5CCE61CCE8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{093C19BB-4CC8-461E-9FB5-E5CCE61CCE8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {120CD111-0905-49CE-AE1F-CA2D10C6DD4B}
+	EndGlobalSection
+EndGlobal

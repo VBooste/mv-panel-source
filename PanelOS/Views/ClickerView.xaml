@@ -1,0 +1,309 @@
+﻿<Window
+    x:Class="PanelOS.Views.ClickerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="ClickerView"
+    Width="210"
+    Height="450"
+    Background="#FF2D2E30"
+    Closing="Window_Closing"
+    FontFamily="{materialDesign:MaterialDesignFont}"
+    Icon="/PanelOS;component/Images/logo256.ico"
+    Loaded="Window_Loaded"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Medium"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    WindowStartupLocation="Manual"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid
+            Name="Header"
+            Grid.Row="0"
+            Background="#FF2E2F32">
+
+            <StackPanel
+                Grid.Row="0"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+
+                <Label
+                    Height="20"
+                    Margin="10,0,123,0"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content="Clicker"
+                    FontSize="12"
+                    Foreground="#DDF1F1F1" />
+
+                <Button
+                    Name="CloseWindowButton"
+                    Width="30"
+                    Height="20"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Panel.ZIndex="0"
+                    materialDesign:ButtonAssist.CornerRadius="0"
+                    Background="#FF525356"
+                    BorderThickness="0"
+                    Click="CloseWindowButton_Click"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+
+                    <materialDesign:PackIcon
+                        Width="16"
+                        Height="16"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Foreground="Gray"
+                        Kind="Close" />
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+
+            <RichTextBox
+                Name="LogsTextBox"
+                Grid.Row="0"
+                materialDesign:RippleAssist.IsDisabled="True"
+                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                Background="#FF292929"
+                FontSize="12"
+                IsReadOnly="True">
+
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+
+            <Label
+                Grid.Row="1"
+                Height="20"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderBrush="Gray"
+                BorderThickness="0,0,0,1"
+                Content="Auto accept"
+                FontSize="12"
+                Foreground="#DDB4B4B4" />
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Button
+                    Name="StartAutoAcceptButton"
+                    Width="105"
+                    Padding="0"
+                    Background="#FF2E2F32"
+                    Click="StartAutoAcceptButton_Click"
+                    Content="Start"
+                    Foreground="#DDF1F1F1"
+                    Style="{DynamicResource MaterialDesignFlatButton}" />
+
+                <Button
+                    Name="StopAutoAcceptButton"
+                    Width="105"
+                    Padding="0"
+                    Background="#FF2E2F32"
+                    Click="StopAutoAcceptButton_Click"
+                    Content="Stop"
+                    Foreground="#DDF1F1F1"
+                    IsEnabled="False"
+                    Style="{DynamicResource MaterialDesignFlatButton}" />
+            </StackPanel>
+
+            <Label
+                Grid.Row="3"
+                Height="20"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderBrush="Gray"
+                BorderThickness="0,1,0,1"
+                Content="Auto disconnect/reconnect"
+                FontSize="12"
+                Foreground="#DDB4B4B4" />
+
+
+            <StackPanel
+                Grid.Row="4"
+                Margin="0,5,0,0"
+                Orientation="Horizontal">
+                <RadioButton
+                    Name="DisconnectTop"
+                    Margin="3,0,0,0"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content=" Disconnect top"
+                    FontSize="10"
+                    IsChecked="True"
+                    Style="{StaticResource MaterialDesignRadioButton}" />
+
+                <RadioButton
+                    Name="DisconnectBottom"
+                    Margin="5,0,0,0"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content=" Disconnect bottom"
+                    FontSize="10"
+                    IsChecked="False"
+                    Style="{StaticResource MaterialDesignRadioButton}" />
+            </StackPanel>
+
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <Label
+                    Grid.Column="0"
+                    Height="20"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Bottom"
+                    Content="Repeat"
+                    FontSize="10"
+                    Foreground="#DDB4B4B4" />
+                <Label
+                    Grid.Column="1"
+                    Height="20"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Bottom"
+                    Content="Loading delay"
+                    FontSize="10"
+                    Foreground="#DDB4B4B4" />
+                <Label
+                    Grid.Column="2"
+                    Height="20"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Bottom"
+                    Content="Reconnect delay"
+                    FontSize="10"
+                    Foreground="#DDB4B4B4" />
+            </Grid>
+
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox
+                    Name="RepeatTimesTextBox"
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    materialDesign:HintAssist.Foreground="Gray"
+                    materialDesign:TextFieldAssist.UnderlineBrush="Gray"
+                    FontSize="11"
+                    Foreground="#FFA1A1A1"
+                    Style="{StaticResource MaterialDesignTextBox}" />
+
+                <TextBox
+                    Name="LoadingDelayTextBox"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    materialDesign:HintAssist.Foreground="Gray"
+                    materialDesign:TextFieldAssist.UnderlineBrush="Gray"
+                    FontSize="11"
+                    Foreground="#FFA1A1A1"
+                    Style="{StaticResource MaterialDesignTextBox}" />
+
+                <TextBox
+                    Name="ReconnectDelayTextBox"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    materialDesign:HintAssist.Foreground="Gray"
+                    materialDesign:TextFieldAssist.UnderlineBrush="Gray"
+                    FontSize="11"
+                    Foreground="#FFA1A1A1"
+                    Style="{StaticResource MaterialDesignTextBox}" />
+            </Grid>
+
+            <StackPanel Grid.Row="7" Orientation="Horizontal">
+                <Button
+                    Name="StartAutoConnectionButton"
+                    Width="105"
+                    Padding="0"
+                    Background="#FF2E2F32"
+                    Click="StartAutoConnectionButton_Click"
+                    Content="Start"
+                    Foreground="#DDF1F1F1"
+                    Style="{DynamicResource MaterialDesignFlatButton}" />
+
+                <Button
+                    Name="StopAutoConnectionButton"
+                    Width="105"
+                    Padding="0"
+                    Background="#FF2E2F32"
+                    Click="StopAutoConnectionButton_Click"
+                    Content="Stop"
+                    Foreground="#DDF1F1F1"
+                    IsEnabled="False"
+                    Style="{DynamicResource MaterialDesignFlatButton}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
+

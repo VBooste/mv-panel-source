@@ -1,0 +1,95 @@
+﻿<Window
+    x:Class="PanelOS.Views.NotificationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Notification"
+    Width="230"
+    Height="140"
+    Background="#FFC5C5C5"
+    BorderBrush="#FFD6D6D6"
+    BorderThickness="1"
+    FontFamily="{materialDesign:MaterialDesignFont}"
+    Icon="/PanelOS;component/Images/logo256.ico"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Medium"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="White">
+            <Button
+                Name="CloseWindowButton"
+                Width="30"
+                Height="20"
+                Padding="0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Panel.ZIndex="1"
+                materialDesign:ButtonAssist.CornerRadius="0"
+                Background="#FFCCCEC9"
+                BorderThickness="0"
+                Click="CloseWindowButton_Click"
+                Style="{DynamicResource MaterialDesignFlatButton}">
+
+                <materialDesign:PackIcon
+                    Width="16"
+                    Height="16"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Foreground="Gray"
+                    Kind="Close" />
+            </Button>
+        </Border>
+
+        <Grid Grid.Row="1" Background="#FFF7F7F7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="35" />
+            </Grid.RowDefinitions>
+
+            <Label
+                Name="NotificationLabel"
+                Grid.Row="0"
+                Padding="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                FontSize="12"
+                FontWeight="Normal"
+                Foreground="Gray" />
+
+            <Button
+                Name="OkButton"
+                Grid.Row="1"
+                Height="35"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="#FFE2E2E2"
+                BorderBrush="#FF2E2F31"
+                Click="OkButton_Click"
+                Content="OK"
+                Foreground="Gray"
+                Style="{DynamicResource MaterialDesignFlatButton}" />
+        </Grid>
+    </Grid>
+</Window>

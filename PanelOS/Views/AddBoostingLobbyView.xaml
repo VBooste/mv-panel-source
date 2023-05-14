@@ -1,0 +1,299 @@
+﻿<Window
+    x:Class="PanelOS.Views.AddBoostingLobbyView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Add boosting lobby"
+    Width="250"
+    Height="375"
+    Background="#FF292A2E"
+    FontFamily="{materialDesign:MaterialDesignFont}"
+    Icon="/PanelOS;component/Images/logo256.ico"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Medium"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid
+            Name="Header"
+            Grid.Row="0"
+            Background="#FF2E2F32">
+
+            <StackPanel
+                Grid.Row="0"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+
+                <Label
+                    Height="20"
+                    Margin="10,0,151,0"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content="Add Lobby"
+                    FontSize="12"
+                    Foreground="#DDF1F1F1" />
+
+                <Button
+                    Name="CloseWindowButton"
+                    Width="30"
+                    Height="20"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Panel.ZIndex="0"
+                    materialDesign:ButtonAssist.CornerRadius="0"
+                    Background="#FF525356"
+                    BorderThickness="0"
+                    Click="CloseWindowButton_Click"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+
+                    <materialDesign:PackIcon
+                        Width="16"
+                        Height="16"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Foreground="Gray"
+                        Kind="Close" />
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
+            <TextBox
+                Grid.Row="0"
+                Width="170"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Left"
+                materialDesign:HintAssist.FloatingOffset="0,-10"
+                materialDesign:HintAssist.Foreground="Gray"
+                materialDesign:HintAssist.Hint="Name"
+                materialDesign:TextFieldAssist.UnderlineBrush="Gray"
+                FontSize="12"
+                Foreground="#FFA1A1A1"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding Name}" />
+
+            <StackPanel
+                Name="PlayersList"
+                Grid.Row="1"
+                Margin="0,5,0,5">
+
+                <ComboBox
+                    Grid.Row="0"
+                    Height="25"
+                    Margin="10,0,10,5"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    BorderBrush="#19ACACAC"
+                    DisplayMemberPath="Login"
+                    Foreground="#FFA1A1A1"
+                    ItemsSource="{Binding Accounts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    SelectedValue="{Binding Player1}"
+                    SelectedValuePath="AccountId" />
+
+                <ComboBox
+                    Grid.Row="0"
+                    Height="25"
+                    Margin="10,0,10,5"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    BorderBrush="#19ACACAC"
+                    DisplayMemberPath="Login"
+                    Foreground="#FFA1A1A1"
+                    ItemsSource="{Binding Accounts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    SelectedValue="{Binding Player2}"
+                    SelectedValuePath="AccountId" />
+
+                <ComboBox
+                    Grid.Row="0"
+                    Height="25"
+                    Margin="10,0,10,5"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    BorderBrush="#19ACACAC"
+                    DisplayMemberPath="Login"
+                    Foreground="#FFA1A1A1"
+                    ItemsSource="{Binding Accounts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    SelectedValue="{Binding Player3}"
+                    SelectedValuePath="AccountId" />
+
+                <ComboBox
+                    Grid.Row="0"
+                    Height="25"
+                    Margin="10,0,10,5"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    BorderBrush="#19ACACAC"
+                    DisplayMemberPath="Login"
+                    Foreground="#FFA1A1A1"
+                    ItemsSource="{Binding Accounts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    SelectedValue="{Binding Player4}"
+                    SelectedValuePath="AccountId" />
+
+                <ComboBox
+                    Grid.Row="0"
+                    Height="25"
+                    Margin="10,0,10,5"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    BorderBrush="#19ACACAC"
+                    DisplayMemberPath="Login"
+                    Foreground="#FFA1A1A1"
+                    ItemsSource="{Binding Accounts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    SelectedValue="{Binding Player5}"
+                    SelectedValuePath="AccountId" />
+
+                <ComboBox
+                    Grid.Row="0"
+                    Height="25"
+                    Margin="10,0,10,5"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    BorderBrush="#19ACACAC"
+                    DisplayMemberPath="Login"
+                    Foreground="#FFA1A1A1"
+                    ItemsSource="{Binding Accounts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    SelectedValue="{Binding Player6}"
+                    SelectedValuePath="AccountId" />
+
+                <ComboBox
+                    Grid.Row="0"
+                    Height="25"
+                    Margin="10,0,10,5"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    BorderBrush="#19ACACAC"
+                    DisplayMemberPath="Login"
+                    Foreground="#FFA1A1A1"
+                    ItemsSource="{Binding Accounts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    SelectedValue="{Binding Player7}"
+                    SelectedValuePath="AccountId" />
+
+                <ComboBox
+                    Grid.Row="0"
+                    Height="25"
+                    Margin="10,0,10,5"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    BorderBrush="#19ACACAC"
+                    DisplayMemberPath="Login"
+                    Foreground="#FFA1A1A1"
+                    ItemsSource="{Binding Accounts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    SelectedValue="{Binding Player8}"
+                    SelectedValuePath="AccountId" />
+
+                <ComboBox
+                    Grid.Row="0"
+                    Height="25"
+                    Margin="10,0,10,5"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    BorderBrush="#19ACACAC"
+                    DisplayMemberPath="Login"
+                    Foreground="#FFA1A1A1"
+                    ItemsSource="{Binding Accounts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    SelectedValue="{Binding Player9}"
+                    SelectedValuePath="AccountId" />
+
+            </StackPanel>
+
+            <Border
+                Grid.Row="2"
+                Width="238"
+                Height="25"
+                Margin="0,0,0,0"
+                BorderThickness="2">
+
+                <Border.BorderBrush>
+                    <VisualBrush>
+                        <VisualBrush.Visual>
+                            <Rectangle
+                                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
+                                Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"
+                                RadiusX="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.TopRight}"
+                                RadiusY="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=CornerRadius.BottomLeft}"
+                                Stroke="#FF387042"
+                                StrokeDashArray="4 2"
+                                StrokeThickness="1" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Border.BorderBrush>
+
+                <Button
+                    Name="AddBoostingLobbyButton"
+                    Width="238"
+                    Height="25"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="AddBoostingLobbyButton_Click"
+                    Content="Add"
+                    Foreground="#FFDFDFDF"
+                    Style="{DynamicResource MaterialDesignFlatButton}" />
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
